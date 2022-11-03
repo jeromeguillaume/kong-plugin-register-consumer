@@ -8,6 +8,7 @@ https://<idp-host>/connect/register
 Get `client-id` and `registration_access_token` from IDP response
 
 2. Do a REST API call on Kong Admin API to create a Consumer
+
 The consumer-name and consumer-id have the `client-id` value
 A tag with `registration_access_token` value is added
 ```
