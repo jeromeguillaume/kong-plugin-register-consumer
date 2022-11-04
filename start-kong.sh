@@ -27,7 +27,7 @@ docker run -d --name kong-register-consumer \
     \"cookie_secure\":false}"\
   -e "KONG_PLUGINS=bundled,register-consumer" \
   -e "KONG_UNTRUSTED_LUA_SANDBOX_ENVIRONMENT=kong.request,kong.response" \
-  -e "KONG_UNTRUSTED_LUA_SANDBOX_REQUIRES=resty.http" \
+  -e "KONG_UNTRUSTED_LUA_SANDBOX_REQUIRES=resty.http,http.request,socket.http" \
   -p 8000:8000 \
   -p 8443:8443 \
   -p 8001:8001 \

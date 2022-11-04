@@ -27,3 +27,6 @@ A tag with the value of `registration_access_token` is added
 https://<kong-admin_api>:8001/consumers/<client_id>/acls
 ```
 A tag with the value of `registration_access_token` is added
+
+## Plugin Configuration
+![Plugin Configuration](./images/plugin-register-consumer-configuration.png)
