@@ -16,8 +16,14 @@ https://<kong-admin_api>:8001/consumers
 ```
 A tag with the value of `registration_access_token` is added
 
-3. Do a REST API call on Kong Admin API to create a Rate Limiting plugin on Consumer created on step #2
+3. Do a REST API call on Kong Admin API to create a Rate Limiting plugin on Consumer (created on step #2)
 ```
 https://<kong-admin_api>:8001/consumers/<client_id>/plugins
+```
+A tag with the value of `registration_access_token` is added
+
+4. Do a REST API call on Kong Admin API to associate the Consumer (created on step #2) with an ACL Group
+```
+https://<kong-admin_api>:8001/consumers/<client_id>/acls
 ```
 A tag with the value of `registration_access_token` is added
