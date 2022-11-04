@@ -140,9 +140,9 @@ function registerConsumer:access(plugin_conf)
     )
   end
   
-  -----------------------------------------
-  -- If the Rate Limting option is enabled
-  -----------------------------------------
+  ------------------------------------------
+  -- If the Rate Limiting option is enabled
+  ------------------------------------------
   if plugin_conf.rate_limiting == true then
   
     local body_rate ="{\
@@ -213,6 +213,40 @@ function registerConsumer:access(plugin_conf)
       return kong.response.exit(status, "{\
         \"Error Code\": " .. status .. ",\
         \"Error Message\": \"Kong Admin API: failure to create Rate Limiting plugin\"\
+        }",
+        {
+        ["Content-Type"] = "application/json"
+        }
+      )
+    end
+
+    --------------------------------------------------
+    -- Kong Admin API: Associate Consumers with an ACL
+    --------------------------------------------------
+    res, err = httpc:request_uri( plugin_conf.kong_admin_api .. "/consumers" .. "/" .. client_id .. "/acls", {
+      method = "POST",
+      headers = {
+        ["Kong-Admin-Token"] = plugin_conf.kong_admin_token,
+        ["Content-Type"] = "application/json",
+      },
+      body = "{\
+      \"group\": \""  .. plugin_conf.acl_group_name .. "\",\
+      \"tags\": [\"" .. registration_access_token .. "\"]\
+      }",
+      keepalive_timeout = 60,
+      keepalive_pool = 10
+    })
+    
+    if err then
+      return nil, err
+    end
+
+    kong.log.debug("registerConsumer Admin API - Associate consumer to ACL - Body Response=" .. res.body)
+    status = res.status
+    if status >= 300 then
+      return kong.response.exit(status, "{\
+        \"Error Code\": " .. status .. ",\
+        \"Error Message\": \"Kong Admin API: failure to associate consumer to ACL\"\
         }",
         {
         ["Content-Type"] = "application/json"

@@ -18,6 +18,7 @@ return {
           { idp_client_registration_endpoint = typedefs.url ({  required = true, default = "http://idp-server/connect/register" }) },
           { kong_admin_api = typedefs.url ({  required = true, default = "http://localhost:8001/default" }) },
           { kong_admin_token = { type = "string", required = true, default = "A-B-C-D" } },
+          { acl_group_name = { type = "string", required = true, default = "group_psd2" } },
           { rate_limiting = { type = "boolean", required = true, default = true } },
           { rate_limiting_config_second = { type = "number", required = false, default = 1 } },
           { rate_limiting_config_minute = { type = "number", required = false  } },
